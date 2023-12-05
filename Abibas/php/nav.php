@@ -13,8 +13,8 @@ if(isset($_SESSION['login_id'])){
   echo '    <div class="collapse navbar-collapse mr-5" id="navbarSupportedContent">';
   echo '        <ul class="navbar-nav ml-auto">';
   echo '            <li class="nav-item mx-2">';
-  echo '                <a class="navbar-brand" href="home.php">'; // To be updated to user-Panel
-  echo '                    <img src="' . $user['profile_image'] . '" alt="..." height="30">';
+  echo '                <a class="navbar-brand " href="home.php">'; // To be updated to user-Panel
+  echo '                    <img src="' . $user['profile_image'] . '"style= "border-radius:60px" alt="..." height="30">';
   echo '                </a>';
   echo '            </li>';
   echo '            <li class="nav-item mx-2">';
