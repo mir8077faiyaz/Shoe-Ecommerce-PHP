@@ -1,4 +1,75 @@
 <?php
+require 'google-api/vendor/autoload.php';
+
+// Creating new google client instance
+$client = new Google_Client();
+
+// Enter your Client ID
+$client->setClientId('606546228194-plph8rauaa6g3261t1fm6n03ipun61s4.apps.googleusercontent.com');
+// Enter your Client Secrect
+$client->setClientSecret('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');
+// Enter the Redirect URL
+$client->setRedirectUri('http://localhost/Shoe-Ecommerce-PHP/Abibas/PHP/login.php');
+
+// Adding those scopes which we want to get (email & profile Information)
+$client->addScope("email");
+$client->addScope("profile");
+
+
+if(isset($_GET['code'])):
+
+    $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+
+    if(!isset($token["error"])){
+        echo "here";
+        $client->setAccessToken($token['access_token']);
+
+        // getting profile information
+        $google_oauth = new Google_Service_Oauth2($client);
+        $google_account_info = $google_oauth->userinfo->get();
+    
+        // Storing data into database
+        $id = mysqli_real_escape_string($db_connection, $google_account_info->id);
+        $full_name = mysqli_real_escape_string($db_connection, trim($google_account_info->name));
+        $email = mysqli_real_escape_string($db_connection, $google_account_info->email);
+        $profile_pic = mysqli_real_escape_string($db_connection, $google_account_info->picture);
+
+        // checking user already exists or not
+        $get_user = mysqli_query($db_connection, "SELECT `google_id` FROM `users` WHERE `google_id`='$id'");
+        if(mysqli_num_rows($get_user) > 0){
+
+            $_SESSION['login_id'] = $id; 
+            header('Location: home.php');
+            exit;
+
+        }
+        else{
+
+            // if user not exists we will insert the user
+            $insert = mysqli_query($db_connection, "INSERT INTO `users`(`google_id`,`name`,`email`,`profile_image`) VALUES('$id','$full_name','$email','$profile_pic')");
+
+            if($insert){
+
+                $_SESSION['login_id'] = $id; 
+                header('Location: home.php');
+                exit;
+            }
+            else{
+                echo "Sign up failed!(Something went wrong).";
+            }
+
+        }
+
+    }
+    else{
+        header('Location: login.php');
+        exit;
+    }
+    
+else: 
+    // Google Login Url = $client->createAuthUrl(); 
+?>
+<?php
 if(isset($_SESSION['login_id'])){
   echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">';
   echo '    <div>';
@@ -52,7 +123,7 @@ else{
   echo '                <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>';
   echo '            </li>';
   echo '            <li class="nav-item mx-2">';
-  echo '                <a class="nav-link" href="login.php">Login</a>';
+  echo '<a class="nav-link" href="' . $client->createAuthUrl() . '">Login</a>';
   echo '            </li>';
   echo '        </ul>';
   echo '        <ul class="navbar-nav">';
@@ -65,7 +136,6 @@ else{
   echo '    </div>';
   echo '</nav>';
 }
+endif; ?>
 ?>
-
-
 
