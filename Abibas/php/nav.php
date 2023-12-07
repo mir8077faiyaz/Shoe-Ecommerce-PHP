@@ -1,5 +1,7 @@
 <?php
+require 'config.php';
 require 'google-api/vendor/autoload.php';
+
 
 // Creating new google client instance
 $client = new Google_Client();
@@ -9,19 +11,18 @@ $client->setClientId('606546228194-plph8rauaa6g3261t1fm6n03ipun61s4.apps.googleu
 // Enter your Client Secrect
 $client->setClientSecret('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');
 // Enter the Redirect URL
-$client->setRedirectUri('http://localhost/Shoe-Ecommerce-PHP/Abibas/PHP/login.php');
+$client->setRedirectUri('http://localhost/Shoe-Ecommerce-PHP/Abibas/PHP/nav.php');
 
 // Adding those scopes which we want to get (email & profile Information)
 $client->addScope("email");
 $client->addScope("profile");
-
 
 if(isset($_GET['code'])):
 
     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
 
     if(!isset($token["error"])){
-        echo "here";
+     // echo "<script>console.log('here1')</script>";
         $client->setAccessToken($token['access_token']);
 
         // getting profile information
@@ -37,14 +38,22 @@ if(isset($_GET['code'])):
         // checking user already exists or not
         $get_user = mysqli_query($db_connection, "SELECT `google_id` FROM `users` WHERE `google_id`='$id'");
         if(mysqli_num_rows($get_user) > 0){
-
             $_SESSION['login_id'] = $id; 
-            header('Location: home.php');
-            exit;
-
+           
+            if($id=='105918507886338760521'){
+                echo '<script>';
+                echo 'console.log("wow");';
+                echo '</script>';
+                header('Location: admin.php');
+                exit;
+            }
+            else{
+                header('Location: home.php');
+                exit;
         }
-        else{
+        }
 
+        else{
             // if user not exists we will insert the user
             $insert = mysqli_query($db_connection, "INSERT INTO `users`(`google_id`,`name`,`email`,`profile_image`) VALUES('$id','$full_name','$email','$profile_pic')");
 
@@ -71,6 +80,8 @@ else:
 ?>
 <?php
 if(isset($_SESSION['login_id'])){
+ 
+
   echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">';
   echo '    <div>';
   echo '        <a class="navbar-brand ml-3" href="home.php">';
@@ -136,6 +147,5 @@ else{
   echo '    </div>';
   echo '</nav>';
 }
-endif; ?>
+endif; 
 ?>
-

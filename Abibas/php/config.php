@@ -1,4 +1,6 @@
 <?php
+
+error_reporting(E_ERROR | E_PARSE);
 session_start();
 session_regenerate_id(true);
 // change the information according to your database
