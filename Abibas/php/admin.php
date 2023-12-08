@@ -35,7 +35,7 @@ if(!isset($_SESSION['login_id'])){
     
     <div class="mx-5 mt-3 " > 
         
-        <form class="mx-5" method="post" action='admin.php'>
+        <form class="mx-5" method="post" action=''>
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
@@ -117,8 +117,7 @@ if(isset($_POST['submit'])){
     $name=$_POST['name'];
     $price=$_POST['price'];
     $size=$_POST['options'];
-    $size= ' '.join($size);
-    echo $size;
+    $size = implode(", ", $_POST['options']);
     $desc=$_POST['desc'];
     $img=$_POST['img'];
 
