@@ -31,77 +31,39 @@ else{
 </head>
 
 <body>
-
   <?php include('nav.php'); ?>
-
-  <div class="container my-2">
-  <div class="row">
-    <div class="col-md-4 my-2">
-      <div class="card bg-dark text-white">
-        <img class="card-img-top" src="../images/abibas_1.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Abibas Walking Shoes | $200</h5>
-          <p class="card-text">Walk till you die</p>
-          <button class="btn btn-light btn-sm"> Add to Cart</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-2">
-      <div class="card bg-dark text-white">
-        <img class="card-img-top" src="../images/abibas_2.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Abibas Galaxy Shoes | $150</h5>
-          <p class="card-text">For comfort</p>
-          <button class="btn btn-light btn-sm"> Add to Cart</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-2">
-      <div class="card bg-dark text-white">
-        <img class="card-img-top" src="../images/abibas_3.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Abibas Series 4 | $250</h5>
-          <p class="card-text">Limited Availability.</p>
-          <button class="btn btn-light btn-sm"> Add to Cart</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-2">
-      <div class="card bg-dark text-white">
-        <img class="card-img-top" src="../images/abibas_1.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <button class="btn btn-light btn-sm"> Add to Cart</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-2">
-      <div class="card bg-dark text-white">
-        <img class="card-img-top" src="../images/abibas_1.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <button class="btn btn-light btn-sm"> Add to Cart</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-2">
-      <div class="card bg-dark text-white">
-        <img class="card-img-top" src="../images/abibas_1.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <button class="btn btn-light btn-sm"> Add to Cart</button>
-        </div>
-      </div>
+  <?php
+    $sql="SELECT `pid`, `name`, `price`, `size`, `description`, `image` FROM `product`";
+    $result=mysqli_query($db_connection,$sql);
+    
+    if($result){
       
-    </div>
-  </div>
-</div>
+      echo '<div class="container my-2">';
+      echo '<div class="row">'; 
+      while($row = mysqli_fetch_assoc($result)){
+        $pid=$row['pid'];
+        $name=$row['name'];
+        $price=$row['price'];
+        $size=$row['size'];
+        $desc=$row['description'];
+        $img=$row['image'];
 
+        echo '<div class="col-md-4 my-2">'; 
+        echo '<div class="card bg-dark text-white">';
+        echo '<img class="card-img-top" src="../images/' . $img . '" alt="Card image cap">';
+        echo '<div class="card-body">';
+        echo '<h5 class="card-title">' . $name . ' | $' . $price . '</h5>';
+        echo '<p class="card-text">'.$desc.'</p>';
+        echo '<a href="checkout.php?pid='.$pid.'" class="btn btn-light btn-sm"> Add to Cart</a>';
+        echo '</div>'; 
+        echo '</div>'; 
+        echo '</div>';
 
-
+      }
+      echo '</div>'; 
+      echo '</div>'; 
+    } 
+  ?>
   <?php include('footer.php'); ?>
   <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -111,5 +73,4 @@ else{
     integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
     crossorigin="anonymous"></script>
 </body>
-
 </html>
