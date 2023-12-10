@@ -25,11 +25,10 @@ if(!isset($_SESSION['login_id'])){
 <body>
 <div class="d-flex justify-content-space-between" style="height:100%;">
     <div class="bg-dark" style="width:10%;">
-       
-        <button type=submit class="btn btn-light btn-md mx-4 my-3"> Add Product</button>
-        <button type=submit class="btn btn-light btn-md mx-4 my-3"> Manage Products</button>
-        <form action="logout.php">
-        <button type=submit class="btn btn-light btn-md mx-4 my-3"> logout</button>
+        <!-- <button type=submit name='submit' class="btn btn-light btn-md mx-4 my-3"> Add Product</button>
+        <button type=submit name='submit' class="btn btn-light btn-md mx-4 my-3"> Manage Products</button> -->
+        <form method='post' action="logout.php">            
+            <button type=submit class="btn btn-light btn-md mx-4 my-3"> logout</button>
         </form>
     </div>
     
@@ -49,22 +48,22 @@ if(!isset($_SESSION['login_id'])){
 
             <div class="form-check-inline">
                 <label class="form-check-label mr-2" for="check1">
-                    <input type="checkbox" class="form-check-input" id="check1" name="options[]" value="1" checked>4
+                    <input type="checkbox" class="form-check-input" id="check1" name="options[]" value="4" checked>4
                 </label>
                 <label class="form-check-label mx-2" for="check2">
-                    <input type="checkbox" class="form-check-input" id="check2" name="options[]" value="2" checked>5
+                    <input type="checkbox" class="form-check-input" id="check2" name="options[]" value="5" checked>5
                 </label>
                 <label class="form-check-label mx-2" for="check3">
-                    <input type="checkbox" class="form-check-input" id="check3" name="options[]" value="3" checked>6
+                    <input type="checkbox" class="form-check-input" id="check3" name="options[]" value="6" checked>6
                 </label>
                 <label class="form-check-label mx-2" for="check4">
-                    <input type="checkbox" class="form-check-input" id="check4" name="options[]" value="4" checked>7
+                    <input type="checkbox" class="form-check-input" id="check4" name="options[]" value="7" checked>7
                 </label>
                 <label class="form-check-label mx-2" for="check5">
-                    <input type="checkbox" class="form-check-input" id="check5" name="options[]" value="5" checked>8
+                    <input type="checkbox" class="form-check-input" id="check5" name="options[]" value="8" checked>8
                 </label>
                 <label class="form-check-label mx-2" for="check6">
-                    <input type="checkbox" class="form-check-input" id="check6" name="options[]" value="6" checked>9
+                    <input type="checkbox" class="form-check-input" id="check6" name="options[]" value="9" checked>9
                 </label>
             </div>
 
@@ -77,7 +76,6 @@ if(!isset($_SESSION['login_id'])){
                 <label for="img">Image</label>
                 <input type="file" class=" form-control btn-sm pb-3" id="img" placeholder="Image" name="img">
             </div>
-        
             <button type="submit" name="submit" class="btn btn-primary">Add Product</button>
         </form>
     </div>
@@ -113,14 +111,13 @@ include('footer.php');
 ?>
 <?php
 if(isset($_POST['submit'])){
-    echo "here";
     $name=$_POST['name'];
     $price=$_POST['price'];
     $size=$_POST['options'];
     $size = implode(", ", $_POST['options']);
     $desc=$_POST['desc'];
     $img=$_POST['img'];
-
+    if(!empty($name) && !empty($price) && !empty($size) && !empty($desc) && !empty($img)){
     $sql = "INSERT INTO `product` (`name`, `price`, `size`, `description`, `image`) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_stmt_init($db_connection);
     
@@ -135,6 +132,6 @@ if(isset($_POST['submit'])){
     
     mysqli_stmt_close($stmt);
     mysqli_close($db_connection);
-    
+}
 }
 ?>
