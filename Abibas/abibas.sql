@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2023 at 09:47 PM
+-- Generation Time: Dec 10, 2023 at 10:58 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -67,10 +67,16 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`pid`, `name`, `price`, `size`, `description`, `image`) VALUES
-(1, 'Abibas Supershot', 100, '0', 'Everyday wear.', 'abibas_4.jpg'),
-(2, 'Abibas Supershot', 484, '0', 'dd', 'abibas_4.jpg'),
-(3, 'Abibas Supershot', 230, ', 135', 'none.', 'abibas_4.jpg'),
-(4, 'Abibas Supershot', 23, ' 456', 'dd', 'abibas_4.jpg');
+(5, 'Abibas Supershot', 250, '4, 5, 6, 7', 'Everyday wear shoes.', 'abibas_4.jpg'),
+(6, 'Abibas HyperNova', 150, '6, 7, 8, 9', 'Lightweight comfort shoes.', 'abibas_3.jpg'),
+(8, 'Abibas Nightflow 2.0', 90, '6, 7, 8, 9', 'Regular wear.', 'abibas_1.jpg'),
+(12, 'Abibas Pure Showdown', 100, '5, 6, 7, 8, 9', 'To keep up with your life\'s motion.', 'abibas_10.jpg'),
+(13, 'Abibas RacerRock ', 130, '4, 5, 6, 7, 8, ', 'Sleek, sporty and seriously comfy.', 'abibas_9.jpg'),
+(14, 'Abibas Regex', 60, '4, 5, 6, 7, 8, ', 'Shoes to express your regular lifestyle.', 'abibas_2.jpg'),
+(15, 'Abibas Cloudshine', 150, '4, 5, 6, 7, 8, ', 'A shoe for cloudy day to make you shine. ', 'abibas_5.jpg'),
+(16, 'Abibas Switch', 60, '5, 6, 7, 8', 'Combine everyday style with comfort. ', 'abibas_6.jpg'),
+(17, 'Abibas ProMax', 99, '5, 6, 7', 'A professional shoe for a good play.', 'abibas_7.jpg'),
+(18, 'Abibas PinkMate', 50, '6, 7, 8, 9', 'A pair of black shoe with hint of pink.', 'abibas_8.jpg');
 
 -- --------------------------------------------------------
 
@@ -164,7 +170,7 @@ ALTER TABLE `order_item`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `shipping`
