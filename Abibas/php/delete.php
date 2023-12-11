@@ -23,9 +23,9 @@ $nextNewCount = $_POST['nextNewCount'];
         $totalRows = mysqli_fetch_assoc($totalRowsResult)['totalRows'];
         if ($nextNewCount >= $totalRows) {
             // Set the offset to the last page
-            $nextNewCount = max(0, $totalRows - 3);
+            $nextNewCount = max(0, $totalRows - 5);
         }
-        $sql = "SELECT `pid`, `name`, `price`, `size`, `description`, `image` FROM `product` ORDER BY `pid` DESC LIMIT 3 OFFSET $nextNewCount";
+        $sql = "SELECT `pid`, `name`, `price`, `size`, `description`, `image` FROM `product` ORDER BY `pid` DESC LIMIT 5 OFFSET $nextNewCount";
 
         $result=mysqli_query($db_connection,$sql);
         

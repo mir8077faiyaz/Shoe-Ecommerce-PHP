@@ -36,14 +36,14 @@ if(!isset($_SESSION['login_id'])){
     $(document).ready(function () {
         var nextCount = 0;
         $("#next").click(function () {
-            nextCount = nextCount + 3;
+            nextCount = nextCount + 5;
             $("#load").load("loadProducts.php", {
                 nextNewCount: nextCount
             });
         });
         $("#prev").click(function () {
             console.log("Here1");
-            nextCount = nextCount - 3;
+            nextCount = nextCount - 5;
             if(nextCount>=0){
 
                 $("#load").load("loadProducts.php", {
@@ -73,10 +73,26 @@ if(!isset($_SESSION['login_id'])){
                         }
                     });
         }
+    function update(pid){
+    var nextCount = 0;
+        console.log(pid);
+        console.log(nextCount);
+        $.ajax({
+                    method: 'POST',
+                    url: 'update.php',
+                    data: {
+                    PID:pid,
+                    nextNewCount: nextCount
+                },
+                    success: function(response) {
+                        console.log(response);
+                    $('#formdiv').html(response);   
+             }
+        });
+        }
 </script>
 
 </head>
-
 <body>
     <div class="d-flex justify-content-space-between" style="height:100%;">
         <div class="bg-dark" style="width:10%;">
@@ -85,7 +101,7 @@ if(!isset($_SESSION['login_id'])){
             </form>
         </div>
 
-        <div class="mx-5 mt-3" style="width:30%;">
+        <div id="formdiv" class="mx-5 mt-3" style="width:30%;">
 
             <form class="mx-5" method="post" action=''>
                 <div class="form-group">
@@ -150,7 +166,7 @@ if(!isset($_SESSION['login_id'])){
         echo '     </thead>';
         echo '     <tbody>';
         
-        $sql = "SELECT `pid`, `name`, `price`, `size`, `description`, `image` FROM `product` ORDER BY `pid` DESC LIMIT 3 OFFSET 0";
+        $sql = "SELECT `pid`, `name`, `price`, `size`, `description`, `image` FROM `product` ORDER BY `pid` DESC LIMIT 5 OFFSET 0";
         $result=mysqli_query($db_connection,$sql);
         
         if($result){
@@ -168,7 +184,7 @@ if(!isset($_SESSION['login_id'])){
             echo '    <td>'.$desc.'</td>';
             echo '    <td><img class="img-fluid" src="../images/' . $img . '" alt="Card image cap" style="width: 100px;"></td>';
 
-            echo '    <td><a id="update" href="javascript:void(0)" class="btn btn-info btn-sm">Update</a></td>';
+            echo '    <td><a id="update" href="javascript:void(0)" class="btn btn-info btn-sm" onclick="update('.$pid.')">Update</a></td>';
             echo '    <td><a id="delete" href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="del('.$pid.')">Delete</a></td>';
             
             echo '</tr>';
