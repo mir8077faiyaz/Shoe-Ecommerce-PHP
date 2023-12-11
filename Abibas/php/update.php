@@ -11,7 +11,6 @@ $size=$row['size'];
 $desc=$row['description'];
 $img=$row['image'];
 
-
 echo '<script>';
 echo '    $(":checkbox").prop(\'checked\', false).parent().removeClass(\'active\');';
 echo '</script>';
@@ -19,12 +18,12 @@ echo '</script>';
 echo '<form class="mx-5" method="post" action="">';
 echo '    <div class="form-group">';
 echo '        <label for="name">Name</label>';
-echo '        <input type="text" class="form-control" id="name" placeholder="Enter name" value=\'$name\' name="name">';
+echo '        <input type="text" class="form-control" id="name" placeholder="Enter name" value="'.htmlspecialchars($name, ENT_QUOTES, 'UTF-8').'" name="name">';
 echo '    </div>';
 
 echo '    <div class="form-group">';
 echo '        <label for="price">Price</label>';
-echo '        <input type="number" class="form-control" id="price" placeholder="Price" name="price">';
+echo '        <input type="number" class="form-control" id="price" placeholder="Price" value="'.htmlspecialchars($price, ENT_QUOTES, 'UTF-8').'" name="price">';
 echo '    </div>';
 echo '    <p>Select Size:</p>';
 
@@ -51,14 +50,15 @@ echo '    </div>';
 
 echo '    <div class="form-group">';
 echo '        <label for="desc">Description</label>';
-echo '        <textarea class="form-control" id="desc" rows="3" name="desc" placeholder="Description"></textarea>';
+echo '        <textarea class="form-control" id="desc" rows="3" name="desc" placeholder="Description" >'.$desc.'</textarea>';
 echo '    </div>';
 
 echo '    <div class="form-group">';
 echo '        <label for="img">Image</label>';
 echo '        <input type="file" class=" form-control btn-sm pb-3" id="img" placeholder="Image" name="img">';
+echo '        <p>Previously selected File: ' . $img . '</p>';
 echo '    </div>';
-echo '    <button type="submit" name="submit" class="btn btn-primary">Add Product</button>';
+echo '    <button type="submit" name="submit" class="btn btn-primary">Update Product</button>';
 echo '</form>';
 
 ?>
