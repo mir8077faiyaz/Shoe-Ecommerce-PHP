@@ -34,6 +34,35 @@ if(!isset($_SESSION['login_id'])){
 <script>
     // Query Code
     $(document).ready(function () {
+        $('#myForm').submit(function (e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        // Serialize form data
+        var formData = new FormData(this);
+        // formData.forEach(function(value, key){
+        // console.log(key, value);
+});
+        // Perform Ajax request
+        $.ajax({
+            url: 'addProducts.php', // Replace with your backend endpoint
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            // data: $(this).serialize(),
+            success: function (response) {
+                // Handle the success response
+                // console.log(response);
+                $('#load').html(response);
+                $('#myForm')[0].reset();
+                $(":checkbox").prop('checked', false).parent().removeClass('active');
+            },
+            error: function (error) {
+                // Handle the error response
+                console.error(error);
+            }
+        });
+    });
         var nextCount = 0;
         $("#next").click(function () {
             nextCount = nextCount + 5;
@@ -42,7 +71,7 @@ if(!isset($_SESSION['login_id'])){
             });
         });
         $("#prev").click(function () {
-            console.log("Here1");
+            // console.log("Here1");
             nextCount = nextCount - 5;
             if(nextCount>=0){
 
@@ -59,8 +88,8 @@ if(!isset($_SESSION['login_id'])){
     });
     function del(pid){
         var nextCount = 0;
-            console.log(pid);
-            console.log(nextCount);
+            // console.log(pid);
+            // console.log(nextCount);
             $.ajax({
                         method: 'POST',
                         url: 'delete.php',
@@ -75,8 +104,8 @@ if(!isset($_SESSION['login_id'])){
         }
     function update(pid){
     var nextCount = 0;
-        console.log(pid);
-        console.log(nextCount);
+        // console.log(pid);
+        // console.log(nextCount);
         $.ajax({
                     method: 'POST',
                     url: 'update.php',
@@ -103,7 +132,7 @@ if(!isset($_SESSION['login_id'])){
 
         <div id="formdiv" class="mx-5 mt-3" style="width:30%;">
 
-            <form class="mx-5" method="post" action=''>
+            <form class="mx-5" id="myForm" >
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
@@ -145,7 +174,7 @@ if(!isset($_SESSION['login_id'])){
                     <label for="img">Image</label>
                     <input type="file" class=" form-control btn-sm pb-3" id="img" placeholder="Image" name="img">
                 </div>
-                <button type="submit" name="submit" class="btn btn-primary">Add Product</button>
+                <button type="submit" name="submit" id="submitBtn" class="btn btn-primary">Add Product</button>
             </form>
         </div>
         
@@ -221,28 +250,28 @@ if(!isset($_SESSION['login_id'])){
 include('footer.php'); 
 ?>
 <?php
-if(isset($_POST['submit'])){
-    $name=$_POST['name'];
-    $price=$_POST['price'];
-    $size=$_POST['options'];
-    $size = implode(", ", $_POST['options']);
-    $desc=$_POST['desc'];
-    $img=$_POST['img'];
-    if(!empty($name) && !empty($price) && !empty($size) && !empty($desc) && !empty($img)){
-    $sql = "INSERT INTO `product` (`name`, `price`, `size`, `description`, `image`) VALUES (?, ?, ?, ?, ?)";
-    $stmt = mysqli_stmt_init($db_connection);
+// if(isset($_POST['submit'])){
+//     $name=$_POST['name'];
+//     $price=$_POST['price'];
+//     $size=$_POST['options'];
+//     $size = implode(", ", $_POST['options']);
+//     $desc=$_POST['desc'];
+//     $img=$_POST['img'];
+//     if(!empty($name) && !empty($price) && !empty($size) && !empty($desc) && !empty($img)){
+//     $sql = "INSERT INTO `product` (`name`, `price`, `size`, `description`, `image`) VALUES (?, ?, ?, ?, ?)";
+//     $stmt = mysqli_stmt_init($db_connection);
     
-    $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
+//     $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
     
-    if ($prepareStmt) {
-        mysqli_stmt_bind_param($stmt, "sssss", $name, $price, $size, $desc, $img);
-        mysqli_stmt_execute($stmt);
-    } else {
-        die("Something went wrong");
-    }
+//     if ($prepareStmt) {
+//         mysqli_stmt_bind_param($stmt, "sssss", $name, $price, $size, $desc, $img);
+//         mysqli_stmt_execute($stmt);
+//     } else {
+//         die("Something went wrong");
+//     }
     
-    mysqli_stmt_close($stmt);
-    mysqli_close($db_connection);
-}
-}
-?>
+//     mysqli_stmt_close($stmt);
+//     mysqli_close($db_connection);
+// }
+// }
+// ?>
