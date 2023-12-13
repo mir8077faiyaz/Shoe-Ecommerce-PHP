@@ -41,7 +41,7 @@ if(!isset($_SESSION['login_id'])){
         var formData = new FormData(this);
         // formData.forEach(function(value, key){
         // console.log(key, value);
-});
+
         // Perform Ajax request
         $.ajax({
             url: 'addProducts.php', // Replace with your backend endpoint
