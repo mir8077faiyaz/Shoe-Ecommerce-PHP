@@ -40,7 +40,7 @@
             echo '    <td>'.$desc.'</td>';
             echo '    <td><img class="img-fluid" src="../images/' . $img . '" alt="Card image cap" style="width: 100px;"></td>';
 
-            echo '    <td><a id="update" href="javascript:void(0)" class="btn btn-info btn-sm">Update</a></td>';
+            echo '    <td><a id="update" href="javascript:void(0)" class="btn btn-info btn-sm" onclick="update('.$pid.')">Update</a></td>';
             echo '    <td><a id="delete" href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="del('.$pid.')">Delete</a></td>';
             
         }

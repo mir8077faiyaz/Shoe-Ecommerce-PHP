@@ -4,29 +4,38 @@
         $name=$_POST['name'];
         $price=$_POST['price'];
         $size=$_POST['options'];
+        echo gettype($_POST['options']);
         $size = implode(", ", $_POST['options']);
         $desc=$_POST['desc'];
         // $img=$_POST['img'];
         $img=$_FILES['img']['name'];
         // print_r($_POST);
         // echo $img;
-        if(!empty($name) && !empty($price) && !empty($size) && !empty($desc) && !empty($img)){
-        $sql = "INSERT INTO `product` (`name`, `price`, `size`, `description`, `image`) VALUES (?, ?, ?, ?, ?)";
-        $stmt = mysqli_stmt_init($db_connection);
-        
-        $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
-        
-        if ($prepareStmt) {
-            mysqli_stmt_bind_param($stmt, "sssss", $name, $price, $size, $desc, $img);
-            mysqli_stmt_execute($stmt);
-        } else {
-            die("Something went wrong");
+        if(!isset($_POST['PID'])){
+            if(!empty($name) && !empty($price) && !empty($size) && !empty($desc) && !empty($img)){
+                $sql = "INSERT INTO `product` (`name`, `price`, `size`, `description`, `image`) VALUES (?, ?, ?, ?, ?)";
+                $stmt = mysqli_stmt_init($db_connection);
+                
+                $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
+                
+                if ($prepareStmt) {
+                    mysqli_stmt_bind_param($stmt, "sssss", $name, $price, $size, $desc, $img);
+                    mysqli_stmt_execute($stmt);
+                } else {
+                    die("Something went wrong");
+                }
+                
+                mysqli_stmt_close($stmt);
+            }
         }
-        
-        mysqli_stmt_close($stmt);
-    }
-
-
+        else{
+            $pid=$_POST['PID'];
+            if(!empty($name) && !empty($price) && !empty($size) && !empty($desc) && !empty($img)){
+              $sql= " UPDATE `product` SET `name`='$name',`price`='$price',`size`='$size',`description`='$desc',`image`='$img' WHERE `pid`=$pid";
+              
+                $result=mysqli_query($db_connection,$sql);
+            }        
+        }
         echo ' <table class="table" >';
         echo '     <thead class="thead-dark">';
         echo '         <tr>';

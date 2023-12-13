@@ -222,8 +222,6 @@ if(!isset($_SESSION['login_id'])){
     
         echo '            </tbody>';
         echo '        </table>';
-
-        
     ?>
     </div>
     <button class="btn btn-dark" id="prev">Previous</button>
