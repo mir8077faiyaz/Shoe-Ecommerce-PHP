@@ -1,29 +1,32 @@
 <?php
+
+//AJAX
 echo '
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
         $("#myForm").submit(function(e){
             e.preventDefault();
-            var formData= new FormData(this);
+            var formData = new FormData(this);
             $.ajax({
-                url:\'addProducts.php\',
+                url: \'addProducts.php\',
                 type: \'POST\',
-                data: {
-                    formData,
-                    PID:'.$_POST['PID'].',
+                data: formData,
+                headers: {
+                    PID: \'' . $_POST['PID'] . '\'
                 },
-                processData: false,  // Don\'t process the data
-                contentType: false,  // Don\'t set content type (browser will set it automatically)
+                processData: false,
+                contentType: false,
                 success: function(response){
-                    console.log(response);
-                    $("#mytable").html(response);
+                    $("#formdiv").load("addForm.php");
+                    console.log("Diya Again");
+                    $("#load").html(response);
                 },
-                error: function (error) {
+                error: function(error){
                     console.error(error);
-                }     
+                }
             });
-        });  
+        });
     });
 </script>
 ';
@@ -41,10 +44,10 @@ $size=$row['size'];
 $desc=$row['description'];
 $img=$row['image'];
 $allSizes = ["4", "5", "6", "7", "8", "9"];
-echo gettype($size);
+// echo gettype($size);
 
 $sizes= explode(", ",$size);
-print_r($sizes);
+// print_r($sizes);
 // echo '<script>';
 // echo '    $(":checkbox").prop(\'checked\', false).parent().removeClass(\'active\');';
 // echo '</script>';
@@ -91,7 +94,8 @@ echo '        <p>Previously selected File: ' . $img . '</p>';
 echo '    </div>';
 
 
-echo '    <button type="submit" name="submit" class="btn btn-primary">Update Product</button>';
+echo '    <button type="submit" name="submit" id="submitBtn" class="btn btn-primary">Update Product</button>';
 echo '</form>';
+
 
 ?>

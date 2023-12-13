@@ -1,18 +1,21 @@
 <?php
         require 'config.php';
         session_start();
+        // echo gettype($pid);
+        // echo "Received PID: " . $pid;
+        // print_r($_POST);
         $name=$_POST['name'];
         $price=$_POST['price'];
         $size=$_POST['options'];
-        echo gettype($_POST['options']);
-        $size = implode(", ", $_POST['options']);
+        // echo gettype($_POST['options']);
         $desc=$_POST['desc'];
         // $img=$_POST['img'];
         $img=$_FILES['img']['name'];
         // print_r($_POST);
         // echo $img;
-        if(!isset($_POST['PID'])){
+        if(!isset($_SERVER['HTTP_PID'])){
             if(!empty($name) && !empty($price) && !empty($size) && !empty($desc) && !empty($img)){
+                $size = implode(", ", $size);
                 $sql = "INSERT INTO `product` (`name`, `price`, `size`, `description`, `image`) VALUES (?, ?, ?, ?, ?)";
                 $stmt = mysqli_stmt_init($db_connection);
                 
@@ -29,7 +32,8 @@
             }
         }
         else{
-            $pid=$_POST['PID'];
+            $size = implode(", ", $size);
+            $pid = $_SERVER['HTTP_PID'];
             if(!empty($name) && !empty($price) && !empty($size) && !empty($desc) && !empty($img)){
               $sql= " UPDATE `product` SET `name`='$name',`price`='$price',`size`='$size',`description`='$desc',`image`='$img' WHERE `pid`=$pid";
               

@@ -34,35 +34,8 @@ if(!isset($_SESSION['login_id'])){
 <script>
     // Query Code
     $(document).ready(function () {
-        $('#myForm').submit(function (e) {
-        e.preventDefault(); // Prevent the default form submission
+        $('#formdiv').load("addForm.php");
 
-        // Serialize form data
-        var formData = new FormData(this);
-        // formData.forEach(function(value, key){
-        // console.log(key, value);
-
-        // Perform Ajax request
-        $.ajax({
-            url: 'addProducts.php', // Replace with your backend endpoint
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            // data: $(this).serialize(),
-            success: function (response) {
-                // Handle the success response
-                // console.log(response);
-                $('#load').html(response);
-                $('#myForm')[0].reset();
-                $(":checkbox").prop('checked', false).parent().removeClass('active');
-            },
-            error: function (error) {
-                // Handle the error response
-                console.error(error);
-            }
-        });
-    });
         var nextCount = 0;
         $("#next").click(function () {
             nextCount = nextCount + 5;
@@ -114,8 +87,8 @@ if(!isset($_SESSION['login_id'])){
                     nextNewCount: nextCount
                 },
                     success: function(response) {
-                        console.log(response);
-                    $('#formdiv').html(response);   
+                    $('#formdiv').html(response);
+                      
              }
         });
         }
@@ -132,50 +105,6 @@ if(!isset($_SESSION['login_id'])){
 
         <div id="formdiv" class="mx-5 mt-3" style="width:30%;">
 
-            <form class="mx-5" id="myForm" >
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
-                </div>
-
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="number" class="form-control" id="price" placeholder="Price" name="price">
-                </div>
-                <p>Select Size:</p>
-
-                <div class="form-check-inline">
-                    <label class="form-check-label mr-2" for="check1">
-                        <input type="checkbox" class="form-check-input" id="check1" name="options[]" value="4" checked>4
-                    </label>
-                    <label class="form-check-label mx-2" for="check2">
-                        <input type="checkbox" class="form-check-input" id="check2" name="options[]" value="5" checked>5
-                    </label>
-                    <label class="form-check-label mx-2" for="check3">
-                        <input type="checkbox" class="form-check-input" id="check3" name="options[]" value="6" checked>6
-                    </label>
-                    <label class="form-check-label mx-2" for="check4">
-                        <input type="checkbox" class="form-check-input" id="check4" name="options[]" value="7" checked>7
-                    </label>
-                    <label class="form-check-label mx-2" for="check5">
-                        <input type="checkbox" class="form-check-input" id="check5" name="options[]" value="8" checked>8
-                    </label>
-                    <label class="form-check-label mx-2" for="check6">
-                        <input type="checkbox" class="form-check-input" id="check6" name="options[]" value="9" checked>9
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label for="desc">Description</label>
-                    <textarea class="form-control" id="desc" rows="3" name="desc" placeholder="Description"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="img">Image</label>
-                    <input type="file" class=" form-control btn-sm pb-3" id="img" placeholder="Image" name="img">
-                </div>
-                <button type="submit" name="submit" id="submitBtn" class="btn btn-primary">Add Product</button>
-            </form>
         </div>
         
         <div class="mx-5 mt-3" style="width:60%;">
@@ -247,29 +176,3 @@ if(!isset($_SESSION['login_id'])){
 <?php 
 include('footer.php'); 
 ?>
-<?php
-// if(isset($_POST['submit'])){
-//     $name=$_POST['name'];
-//     $price=$_POST['price'];
-//     $size=$_POST['options'];
-//     $size = implode(", ", $_POST['options']);
-//     $desc=$_POST['desc'];
-//     $img=$_POST['img'];
-//     if(!empty($name) && !empty($price) && !empty($size) && !empty($desc) && !empty($img)){
-//     $sql = "INSERT INTO `product` (`name`, `price`, `size`, `description`, `image`) VALUES (?, ?, ?, ?, ?)";
-//     $stmt = mysqli_stmt_init($db_connection);
-    
-//     $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
-    
-//     if ($prepareStmt) {
-//         mysqli_stmt_bind_param($stmt, "sssss", $name, $price, $size, $desc, $img);
-//         mysqli_stmt_execute($stmt);
-//     } else {
-//         die("Something went wrong");
-//     }
-    
-//     mysqli_stmt_close($stmt);
-//     mysqli_close($db_connection);
-// }
-// }
-// ?>
