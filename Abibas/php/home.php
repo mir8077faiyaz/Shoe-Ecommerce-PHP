@@ -39,7 +39,7 @@ else{
     $result=mysqli_query($db_connection,$sql);
     
     if($result){
-      echo ' <form id="myForm" onsubmit="return false">';
+      
 
       echo '<div class="container my-2">';
       echo '<div class="row">'; 
@@ -54,6 +54,7 @@ else{
         $img=$row['image'];
 
         echo '<div class="col-md-4 my-2">'; 
+        echo ' <form onsubmit="return false">';
         echo '<div class="card bg-dark text-white">';
         echo '<img class="card-img-top" src="../images/' . $img . '" alt="Card image cap">';
         echo '<div class="card-body">';
@@ -65,23 +66,23 @@ else{
         echo '    <button type="submit" name="submit" class="btn btn-sm btn-primary">Add to Cart</button>';
 
         echo '<input type="hidden" value='.$pid.' name="pid">';
-
-        echo '<select class="form-select btn btn-sm btn-danger mx-1" aria-label="Default select example">';
-        echo '  <option selected>Size</option>';
+        echo '<select class="form-select btn btn-sm btn-danger mx-1" aria-label="Default select example" name="size">';
+        echo '  <option selected value='.$size[0].'>Size</option>';
         foreach ($sizes as $size) {
-        echo '  <option name="size">'.$size.'</option>';
+        echo '  <option >'.$size.'</option>';
         }
         echo '</select>';
        
        
         echo '</div>'; 
         echo '</div>'; 
+        echo '</form>';
         echo '</div>';
 
       }
       echo '</div>'; 
       echo '</div>'; 
-      echo '</form>';
+      ;
 
     } 
   ?>
@@ -97,7 +98,7 @@ else{
 
     <script>
         $(document).ready(function(){
-            $("#myForm").submit(function(e){
+            $("form").submit(function(e){
                 e.preventDefault();
                 var formData= new FormData(this);
                 $.ajax({
