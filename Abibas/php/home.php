@@ -28,6 +28,8 @@ else{
 
   <title>Abibas | Home</title>
   <link rel="icon" type="image/x-icon" href="../images/logo.jpg">
+
+  
 </head>
 
 <body>
@@ -37,7 +39,8 @@ else{
     $result=mysqli_query($db_connection,$sql);
     
     if($result){
-      
+      echo ' <form id="myForm" onsubmit="return false">';
+
       echo '<div class="container my-2">';
       echo '<div class="row">'; 
       while($row = mysqli_fetch_assoc($result)){
@@ -45,6 +48,8 @@ else{
         $name=$row['name'];
         $price=$row['price'];
         $size=$row['size'];
+        
+        $sizes = explode(", ", $size);
         $desc=$row['description'];
         $img=$row['image'];
 
@@ -54,7 +59,21 @@ else{
         echo '<div class="card-body">';
         echo '<h5 class="card-title">' . $name . ' | $' . $price . '</h5>';
         echo '<p class="card-text">'.$desc.'</p>';
-        echo '<a href="checkout.php?pid='.$pid.'" class="btn btn-light btn-sm"> Add to Cart</a>';
+
+
+        
+        echo '    <button type="submit" name="submit" class="btn btn-sm btn-primary">Add to Cart</button>';
+
+        echo '<input type="hidden" value='.$pid.' name="pid">';
+
+        echo '<select class="form-select btn btn-sm btn-danger mx-1" aria-label="Default select example">';
+        echo '  <option selected>Size</option>';
+        foreach ($sizes as $size) {
+        echo '  <option name="size">'.$size.'</option>';
+        }
+        echo '</select>';
+       
+       
         echo '</div>'; 
         echo '</div>'; 
         echo '</div>';
@@ -62,6 +81,8 @@ else{
       }
       echo '</div>'; 
       echo '</div>'; 
+      echo '</form>';
+
     } 
   ?>
   <?php include('footer.php'); ?>
@@ -72,5 +93,33 @@ else{
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
     crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>';
+
+    <script>
+        $(document).ready(function(){
+            $("#myForm").submit(function(e){
+                e.preventDefault();
+                var formData= new FormData(this);
+                $.ajax({
+                    url:'cart.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,  // Don't process the data
+                    contentType: false,  // Don't set content type (browser will set it automatically)
+                    success: function(response){
+                        console.log(response);
+                    },
+                    error: function (error) {
+                    console.error(error);
+                    }
+                    
+                });
+
+
+            });
+
+        });
+        
+    </script>
 </body>
 </html>
