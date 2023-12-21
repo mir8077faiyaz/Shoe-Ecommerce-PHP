@@ -61,7 +61,6 @@ else{
         echo '<h5 class="card-title">' . $name . ' | $' . $price . '</h5>';
         echo '<p class="card-text">'.$desc.'</p>';
 
-
         
         echo '    <button type="submit" name="submit" class="btn btn-sm btn-primary">Add to Cart</button>';
 
