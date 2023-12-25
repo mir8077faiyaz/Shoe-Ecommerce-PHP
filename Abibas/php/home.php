@@ -103,14 +103,17 @@ else{
                 $.ajax({
                     url:'cart.php',
                     type: 'POST',
+                    dataType: 'json',
                     data: formData,
                     processData: false,  // Don't process the data
                     contentType: false,  // Don't set content type (browser will set it automatically)
                     success: function(response){
-                        console.log(response);
+                        console.log(response)
+                        if(response.status === 'error'){
+                          alert("You are not logged in");
+                        }
                     },
                     error: function (error) {
-                    console.error(error);
                     }
                     
                 });

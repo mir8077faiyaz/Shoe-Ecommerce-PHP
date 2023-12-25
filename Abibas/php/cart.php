@@ -1,12 +1,14 @@
 <?php
+session_start();
 require_once 'config.php';
-if(isset($_SESSION['login_id'])){
-print_r($_POST);
-
-}
-else{
-    echo '<script>alert("Must be logged in!")</script>';
+$response = array();
+if (isset($_SESSION['login_id'])) {
+    $response['pid']=$_POST['pid'];
+    $response['size']=$_POST['size'];
+    echo json_encode($response);
+} else {
+    $response['status'] = 'error';
+    echo json_encode($response);
     exit();
 }
-
 ?>
