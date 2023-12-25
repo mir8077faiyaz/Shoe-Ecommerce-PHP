@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 10:58 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Dec 25, 2023 at 10:42 AM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,7 @@ CREATE TABLE `orders` (
   `create_date` date NOT NULL,
   `complete` tinyint(1) NOT NULL,
   `uid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -42,10 +42,13 @@ CREATE TABLE `orders` (
 
 CREATE TABLE `order_item` (
   `item_id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
   `pid` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
-  `add_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `size` int(11) NOT NULL,
+  `add_date` date NOT NULL,
+  `oid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -57,26 +60,23 @@ CREATE TABLE `product` (
   `pid` int(11) NOT NULL,
   `name` varchar(25) NOT NULL,
   `price` float NOT NULL,
-  `size` varchar(15) NOT NULL,
+  `size` varchar(20) NOT NULL,
   `description` text NOT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`pid`, `name`, `price`, `size`, `description`, `image`) VALUES
-(5, 'Abibas Supershot', 250, '4, 5, 6, 7', 'Everyday wear shoes.', 'abibas_4.jpg'),
-(6, 'Abibas HyperNova', 150, '6, 7, 8, 9', 'Lightweight comfort shoes.', 'abibas_3.jpg'),
-(8, 'Abibas Nightflow 2.0', 90, '6, 7, 8, 9', 'Regular wear.', 'abibas_1.jpg'),
-(12, 'Abibas Pure Showdown', 100, '5, 6, 7, 8, 9', 'To keep up with your life\'s motion.', 'abibas_10.jpg'),
 (13, 'Abibas RacerRock ', 130, '4, 5, 6, 7, 8, ', 'Sleek, sporty and seriously comfy.', 'abibas_9.jpg'),
 (14, 'Abibas Regex', 60, '4, 5, 6, 7, 8, ', 'Shoes to express your regular lifestyle.', 'abibas_2.jpg'),
 (15, 'Abibas Cloudshine', 150, '4, 5, 6, 7, 8, ', 'A shoe for cloudy day to make you shine. ', 'abibas_5.jpg'),
 (16, 'Abibas Switch', 60, '5, 6, 7, 8', 'Combine everyday style with comfort. ', 'abibas_6.jpg'),
-(17, 'Abibas ProMax', 99, '5, 6, 7', 'A professional shoe for a good play.', 'abibas_7.jpg'),
-(18, 'Abibas PinkMate', 50, '6, 7, 8, 9', 'A pair of black shoe with hint of pink.', 'abibas_8.jpg');
+(19, 'Abibas Super Run', 75, '6, 7', 'Super running shoes.', 'abibas_1.jpg'),
+(23, 'Abibas Nightflow 3.0', 120, '4, 5, 6, 7, 8, 9', 'mmm', 'abibas_3.jpg'),
+(24, 'Abibas Walker', 85, '4, 6, 8', 'Perfect walking shoes.', 'abibas_8.jpg');
 
 -- --------------------------------------------------------
 
@@ -88,7 +88,7 @@ CREATE TABLE `shipping` (
   `shipping_id` int(11) NOT NULL,
   `uid` int(11) DEFAULT NULL,
   `address` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -98,10 +98,10 @@ CREATE TABLE `shipping` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `google_id` varchar(150) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `profile_image` text NOT NULL
+  `google_id` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile_image` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -110,7 +110,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `google_id`, `name`, `email`, `profile_image`) VALUES
 (2, '105918507886338760521', 'Mir Faiyaz Hossain', 'mirhossain8077@gmail.com', 'https://lh3.googleusercontent.com/a/ACg8ocLpydIykQwn4qX3fO-I8S-t5UbxfJQpqa2naBVgS067bQ=s96-c'),
-(3, '113857876217439529156', 'Shajreen Tabassum Diya 2014061642', 'shajreen.diya@northsouth.edu', 'https://lh3.googleusercontent.com/a/ACg8ocLtqu1ezegIyuq_5dGsFMdM5dQeeQ5SgnX1w35Qg3Ps4w=s96-c');
+(3, '113857876217439529156', 'Shajreen Tabassum Diya 2014061642', 'shajreen.diya@northsouth.edu', 'https://lh3.googleusercontent.com/a/ACg8ocLtqu1ezegIyuq_5dGsFMdM5dQeeQ5SgnX1w35Qg3Ps4w=s96-c'),
+(4, '106563202300429122401', 'Hossain Mir Faiyaz', 'hossainmirfaiyaz@gmail.com', 'https://lh3.googleusercontent.com/a/ACg8ocIzg-m-EII9bBSwU9AxFf2zfCm6CTUnaFHVo844CmDtfEs=s96-c'),
+(5, '106331468374721876765', 'Mir Faiyaz Hossain 2011385042', 'mir.hossain01@northsouth.edu', 'https://lh3.googleusercontent.com/a/ACg8ocIn4iQwO9DJn30PDlT5tGHhyQmbUNX2COaTCbSfnYjWdis=s96-c');
 
 --
 -- Indexes for dumped tables
@@ -128,7 +130,9 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_item`
   ADD PRIMARY KEY (`item_id`),
-  ADD KEY `fk_pid` (`pid`);
+  ADD KEY `fk_pid` (`pid`),
+  ADD KEY `fk_oitem_uid` (`uid`),
+  ADD KEY `fk_oid` (`oid`);
 
 --
 -- Indexes for table `product`
@@ -170,7 +174,7 @@ ALTER TABLE `order_item`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `shipping`
@@ -182,7 +186,7 @@ ALTER TABLE `shipping`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -198,6 +202,8 @@ ALTER TABLE `orders`
 -- Constraints for table `order_item`
 --
 ALTER TABLE `order_item`
+  ADD CONSTRAINT `fk_oid` FOREIGN KEY (`oid`) REFERENCES `orders` (`oid`),
+  ADD CONSTRAINT `fk_oitem_uid` FOREIGN KEY (`uid`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `fk_pid` FOREIGN KEY (`pid`) REFERENCES `product` (`pid`) ON DELETE SET NULL;
 
 --
