@@ -43,6 +43,7 @@ else{
 
       echo '<div class="container my-2">';
       echo '<div class="row">'; 
+      //Sth
       while($row = mysqli_fetch_assoc($result)){
         $pid=$row['pid'];
         $name=$row['name'];
