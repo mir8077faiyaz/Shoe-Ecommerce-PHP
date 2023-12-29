@@ -108,9 +108,13 @@ else{
                     processData: false,  // Don't process the data
                     contentType: false,  // Don't set content type (browser will set it automatically)
                     success: function(response){
-                        console.log(response)
                         if(response.status === 'error'){
                           alert("You are not logged in");
+                        }else{
+                          console.log(response)
+                          var qty=response.quantity
+                          console.log("var:",qty)
+                          $('#cart-qty').html(qty)
                         }
                     },
                     error: function (error) {

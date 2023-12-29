@@ -83,7 +83,17 @@ else:
 ?>
 <?php
 if(isset($_SESSION['login_id'])){
- 
+    $gid=$_SESSION['login_id'];
+    $sql= 'SELECT `id`, `name` FROM `users` WHERE `google_id`='.$gid.'';//extract id from users table gid for user account
+    $result=mysqli_query($db_connection,$sql);//queries the db and checks if successful 
+    $row=mysqli_fetch_assoc($result); //keep the results row by row in an array called $row
+    
+    $uid=$row['id'];//extract id and store in UID
+
+    $sql="SELECT SUM(quantity) FROM order_item WHERE uid='$uid'";
+    $result=mysqli_query($db_connection,$sql);
+    $row=mysqli_fetch_assoc($result); 
+    $qty=$row['SUM(quantity)'];
 
   echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">';
   echo '    <div>';
@@ -113,7 +123,7 @@ if(isset($_SESSION['login_id'])){
   echo '            <li class="nav-item mx-2">';
   echo '                <a class="navbar-brand mx-0" href="checkout.php">';
   echo '                    <img src="../images/cart.png" alt="..." height="30">';
-  echo '                   <span class="cart" style="min-width: 22px;min-height: 22px; text-align: center; position: absolute;width:20px;z-index: 2; background-color:red; border-radius:80%; font-size:12px;margin-left:-15px; margin-top:-5px;">10</span>';
+  echo '                   <span class="cart" id="cart-qty" style="min-width: 22px;min-height: 22px; text-align: center; position: absolute;width:20px;z-index: 2; background-color:red; border-radius:80%; font-size:12px;margin-left:-15px; margin-top:-5px;">'.$qty.'</span>';
   echo '                </a>';
   echo '            </li>';
   echo '        </ul>';
@@ -122,6 +132,7 @@ if(isset($_SESSION['login_id'])){
 
 }
 else{
+
   echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">';
   echo '    <div>';
   echo '        <a class="navbar-brand ml-3" href="home.php">';

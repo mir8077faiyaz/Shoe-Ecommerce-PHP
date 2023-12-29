@@ -62,6 +62,12 @@ if (isset($_SESSION['login_id'])) {
         }
 
     }
+    
+    $sql="SELECT SUM(quantity) FROM order_item WHERE uid='$uid'";
+    $result=mysqli_query($db_connection,$sql);
+    $row=mysqli_fetch_assoc($result); 
+    $qty=$row['SUM(quantity)'];
+    $response['quantity']=$qty;
     echo json_encode($response);
 }
 
