@@ -110,8 +110,12 @@ if(isset($_SESSION['login_id'])){
   echo '            <li class="nav-item mx-2">';
   echo '                <a class="navbar-brand" href="checkout.php">';
   echo '                    <img src="../images/cart.png" alt="..." height="30">';
+  echo '                   <span style="border-radius:4px">1</span>';
   echo '                </a>';
   echo '            </li>';
+  
+
+
   echo '        </ul>';
   echo '    </div>';
   echo '</nav>';
