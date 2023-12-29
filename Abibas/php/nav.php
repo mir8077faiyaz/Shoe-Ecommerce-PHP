@@ -1,3 +1,6 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>console.log("here")</script>
+
 <?php
 require 'config.php';
 require 'google-api/vendor/autoload.php';
@@ -108,14 +111,11 @@ if(isset($_SESSION['login_id'])){
   echo '        </ul>';
   echo '        <ul class="navbar-nav">';
   echo '            <li class="nav-item mx-2">';
-  echo '                <a class="navbar-brand" href="checkout.php">';
+  echo '                <a class="navbar-brand mx-0" href="checkout.php">';
   echo '                    <img src="../images/cart.png" alt="..." height="30">';
-  echo '                   <span style="border-radius:4px">1</span>';
+  echo '                   <span class="cart" style="min-width: 22px;min-height: 22px; text-align: center; position: absolute;width:20px;z-index: 2; background-color:red; border-radius:80%; font-size:12px;margin-left:-15px; margin-top:-5px;">10</span>';
   echo '                </a>';
   echo '            </li>';
-  
-
-
   echo '        </ul>';
   echo '    </div>';
   echo '</nav>';
