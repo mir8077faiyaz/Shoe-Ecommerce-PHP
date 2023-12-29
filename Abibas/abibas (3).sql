@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2023 at 10:42 AM
+-- Generation Time: Dec 29, 2023 at 10:50 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -34,6 +34,14 @@ CREATE TABLE `orders` (
   `uid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`oid`, `create_date`, `complete`, `uid`) VALUES
+(1, '2023-12-29', 0, 4),
+(2, '2023-12-29', 0, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -47,8 +55,29 @@ CREATE TABLE `order_item` (
   `quantity` int(11) NOT NULL,
   `size` int(11) NOT NULL,
   `add_date` date NOT NULL,
-  `oid` int(11) NOT NULL
+  `oid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `order_item`
+--
+
+INSERT INTO `order_item` (`item_id`, `uid`, `pid`, `quantity`, `size`, `add_date`, `oid`) VALUES
+(8, 4, 13, 3, 4, '2023-12-29', NULL),
+(9, 4, 13, 1, 7, '2023-12-29', NULL),
+(10, 4, 15, 2, 6, '2023-12-29', NULL),
+(11, 4, 15, 9, 4, '2023-12-29', NULL),
+(12, 4, 16, 1, 7, '2023-12-29', NULL),
+(13, 4, 23, 1, 6, '2023-12-29', NULL),
+(14, 4, 15, 1, 7, '2023-12-29', NULL),
+(15, 4, 19, 1, 6, '2023-12-29', NULL),
+(16, 4, 15, 9, 4, '2023-12-29', NULL),
+(17, 4, 14, 3, 4, '2023-12-29', NULL),
+(18, 4, 13, 3, 4, '2023-12-29', NULL),
+(19, 4, 14, 3, 4, '2023-12-29', NULL),
+(20, 5, 14, 1, 4, '2023-12-29', NULL),
+(21, 5, 15, 9, 4, '2023-12-29', NULL),
+(22, 5, 13, 3, 4, '2023-12-29', NULL);
 
 -- --------------------------------------------------------
 
@@ -110,7 +139,6 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `google_id`, `name`, `email`, `profile_image`) VALUES
 (2, '105918507886338760521', 'Mir Faiyaz Hossain', 'mirhossain8077@gmail.com', 'https://lh3.googleusercontent.com/a/ACg8ocLpydIykQwn4qX3fO-I8S-t5UbxfJQpqa2naBVgS067bQ=s96-c'),
-(3, '113857876217439529156', 'Shajreen Tabassum Diya 2014061642', 'shajreen.diya@northsouth.edu', 'https://lh3.googleusercontent.com/a/ACg8ocLtqu1ezegIyuq_5dGsFMdM5dQeeQ5SgnX1w35Qg3Ps4w=s96-c'),
 (4, '106563202300429122401', 'Hossain Mir Faiyaz', 'hossainmirfaiyaz@gmail.com', 'https://lh3.googleusercontent.com/a/ACg8ocIzg-m-EII9bBSwU9AxFf2zfCm6CTUnaFHVo844CmDtfEs=s96-c'),
 (5, '106331468374721876765', 'Mir Faiyaz Hossain 2011385042', 'mir.hossain01@northsouth.edu', 'https://lh3.googleusercontent.com/a/ACg8ocIn4iQwO9DJn30PDlT5tGHhyQmbUNX2COaTCbSfnYjWdis=s96-c');
 
@@ -162,13 +190,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `oid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `oid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `product`
