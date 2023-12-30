@@ -29,8 +29,36 @@ else{
 </head>
 <body>
 
-    <?php include('nav.php'); ?>
-    <h1>Cart Details</h1>
+<?php
+    include('nav.php'); 
+
+?>
+
+<h4 style="margin-left:30px">Cart Details</h4>
+<div class="container">
+  <div class="row ">
+    <div class="col-sm " style="font-weight: bold;">
+        Image
+    </div>
+    <div class="col-sm" style="font-weight: bold;">
+      Item
+    </div>
+    <div class="col-sm" style="font-weight: bold;">
+      Size
+    </div>
+    <div class="col-sm" style="font-weight: bold;">
+      Price
+    </div>
+    <div class="col-sm" style="font-weight: bold;">
+      Quantity
+    </div>
+    <div class="col-sm"style="font-weight: bold;">
+      Total Price
+    </div>
+  </div>
+</div>
+<hr>
+
     <?php include('footer.php'); ?>
      <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
      <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

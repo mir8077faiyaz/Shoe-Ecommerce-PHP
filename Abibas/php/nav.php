@@ -12,6 +12,7 @@ $client->setClientId('606546228194-plph8rauaa6g3261t1fm6n03ipun61s4.apps.googleu
 $client->setClientSecret('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');
 // Enter the Redirect URL
 $client->setRedirectUri('http://localhost/Shoe-Ecommerce-PHP/Abibas/PHP/nav.php');
+$client->setApprovalPrompt('force');
 
 // Adding those scopes which we want to get (email & profile Information)
 $client->addScope("email");
