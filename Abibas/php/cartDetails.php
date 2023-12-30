@@ -29,6 +29,7 @@ else{
 </head>
 <body>
 
+
 <?php
     include('nav.php'); 
 
@@ -66,7 +67,10 @@ else{
   $row=mysqli_fetch_assoc($result); //keep the results row by row in an array called $row
 
   $uid=$row['id'];//extract id and store in UID
-    $sql="SELECT * FROM order_item NATURAL JOIN product WHERE `uid` ='$uid'";
+    $sql="SELECT order_item.*, product.name,product.price,product.image
+    FROM order_item
+    JOIN product ON order_item.pid = product.pid
+    WHERE `uid` ='$uid'";
     $result=mysqli_query($db_connection,$sql);
     while($row=mysqli_fetch_assoc($result)){
       $img=$row['image'];
@@ -75,6 +79,7 @@ else{
       $price=$row['price'];
       $qauntity=$row['quantity'];
       $total=$qauntity*$price;
+      $pid=$row['pid'];
       echo '<div class="row ">';
       echo '  <div class="col-sm" style="font-weight: bold;">';
       echo '    <img class="img-fluid" src="../images/' . $img . '" alt="Image">';
@@ -88,8 +93,12 @@ else{
       echo '  <div class="col-sm" style="font-weight: bold;">';
       echo '    '.$price.'';
       echo '  </div>';
-      echo '  <div class="col-sm" style="font-weight: bold;">';
-      echo '    '.$qauntity.'';
+      echo '  <div id="qty" class="col-sm" style="font-weight: bold;">';
+      echo '    '.$quantity.'';
+      echo '<a href="javascript:void(0)" id="up" onclick="up('.$pid.', '.$size.', '.$quantity.')">
+        <img style="margin-left:12px;width:12px" src="../images/qtyUp.png" alt="btnup">
+      </a>';
+      echo '<a href="javascript:void(0)" id="down" ><img style="width:12px" src="../images/qtyDown.png" alt="btnup"></a>';
       echo '  </div>';
       echo '  <div class="col-sm"style="font-weight: bold;">';
       echo '    '.$total.'';
@@ -104,7 +113,28 @@ else{
 
     <?php include('footer.php'); ?>
      <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+
      <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+        function up(pid,size, quantity){
+            $.ajax({
+                        method: 'POST',
+                        url: 'cartUp.php',
+                        data: {
+                        PID:pid,
+                        SIZE: size,
+                        QTY: quantity
+                    },
+                        success: function(response) {
+                        $('#qty').html(response);
+                        
+                }
+            });
+            }
+    </script>
+
 </body>
 </html>

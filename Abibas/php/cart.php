@@ -34,6 +34,8 @@ if (isset($_SESSION['login_id'])) {
             //proceed row by row in the order item table.
             $sql4= "SELECT * FROM `order_item`";
             $result4=mysqli_query($db_connection,$sql4);
+            $counter=0;//changed from line 44 to 37
+
             while($row2 = mysqli_fetch_assoc($result4)){
                 $qty=$row2['quantity'];
                 $qty=(int)$qty;
@@ -41,7 +43,6 @@ if (isset($_SESSION['login_id'])) {
                 $response['oid'] = $row2['oid'];
 
 
-                $counter=0;
             //check if oid== null and row[pid]=$_POST['pid'] (can be written as $pid) and $row[size]=$_post[size] if true then update quantity or else
                 if(is_null($row2['oid']) && $row2['pid']==$_POST['pid'] && $row2['size']==$_POST['size'])
                 {
