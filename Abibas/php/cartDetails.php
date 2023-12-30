@@ -55,9 +55,52 @@ else{
     <div class="col-sm"style="font-weight: bold;">
       Total Price
     </div>
+    
   </div>
+  <hr>
+  <?php
+
+  $gid=$_SESSION['login_id'];
+  $sql= 'SELECT `id`, `name` FROM `users` WHERE `google_id`='.$gid.'';//extract id from users table gid for user account
+  $result=mysqli_query($db_connection,$sql);//queries the db and checks if successful 
+  $row=mysqli_fetch_assoc($result); //keep the results row by row in an array called $row
+
+  $uid=$row['id'];//extract id and store in UID
+    $sql="SELECT * FROM order_item NATURAL JOIN product WHERE `uid` ='$uid'";
+    $result=mysqli_query($db_connection,$sql);
+    while($row=mysqli_fetch_assoc($result)){
+      $img=$row['image'];
+      $item=$row['name'];
+      $size=$row['size'];
+      $price=$row['price'];
+      $qauntity=$row['quantity'];
+      $total=$qauntity*$price;
+      echo '<div class="row ">';
+      echo '  <div class="col-sm" style="font-weight: bold;">';
+      echo '    <img class="img-fluid" src="../images/' . $img . '" alt="Image">';
+      echo '  </div>';
+      echo '  <div class="col-sm" style="font-weight: bold;">';
+      echo '    '.$item.'';
+      echo '  </div>';
+      echo '  <div class="col-sm" style="font-weight: bold;">';
+      echo '    '.$size.'';
+      echo '  </div>';
+      echo '  <div class="col-sm" style="font-weight: bold;">';
+      echo '    '.$price.'';
+      echo '  </div>';
+      echo '  <div class="col-sm" style="font-weight: bold;">';
+      echo '    '.$qauntity.'';
+      echo '  </div>';
+      echo '  <div class="col-sm"style="font-weight: bold;">';
+      echo '    '.$total.'';
+      echo '  </div>';
+      echo '</div>';
+      echo '  <hr>';
+    }
+
+  ?>
 </div>
-<hr>
+
 
     <?php include('footer.php'); ?>
      <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

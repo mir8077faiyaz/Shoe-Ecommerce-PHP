@@ -82,7 +82,7 @@ else{
       }
       echo '</div>'; 
       echo '</div>'; 
-      ;
+      ; // What is this?
 
     } 
   ?>
