@@ -60,7 +60,7 @@ else{
   </div>
   <hr>
   <?php
-
+  echo '<div id="table_div">';
   $gid=$_SESSION['login_id'];
   $sql= 'SELECT `id`, `name` FROM `users` WHERE `google_id`='.$gid.'';//extract id from users table gid for user account
   $result=mysqli_query($db_connection,$sql);//queries the db and checks if successful 
@@ -72,13 +72,15 @@ else{
     JOIN product ON order_item.pid = product.pid
     WHERE `uid` ='$uid'";
     $result=mysqli_query($db_connection,$sql);
+    $div_count=0;
+    
     while($row=mysqli_fetch_assoc($result)){
       $img=$row['image'];
       $item=$row['name'];
       $size=$row['size'];
       $price=$row['price'];
-      $qauntity=$row['quantity'];
-      $total=$qauntity*$price;
+      $quantity=$row['quantity'];
+      $total=$quantity*$price;
       $pid=$row['pid'];
       echo '<div class="row ">';
       echo '  <div class="col-sm" style="font-weight: bold;">';
@@ -93,20 +95,29 @@ else{
       echo '  <div class="col-sm" style="font-weight: bold;">';
       echo '    '.$price.'';
       echo '  </div>';
-      echo '  <div id="qty" class="col-sm" style="font-weight: bold;">';
-      echo '    '.$quantity.'';
-      echo '<a href="javascript:void(0)" id="up" onclick="up('.$pid.', '.$size.', '.$quantity.')">
-        <img style="margin-left:12px;width:12px" src="../images/qtyUp.png" alt="btnup">
-      </a>';
-      echo '<a href="javascript:void(0)" id="down" ><img style="width:12px" src="../images/qtyDown.png" alt="btnup"></a>';
+      echo '  <div  class="col-sm" style="font-weight: bold;">';
+      echo ' <form onsubmit="return false" class="form-inline">';
+      echo '<div id="qty'.$div_count.'">'.$quantity.'</div>';
+      echo '<input type="hidden" name="pid" value="'.$pid.'">';
+      echo '<input type="hidden" name="size" value="'.$size.'">';
+      echo '<input type="hidden" name="quantity" value="'.$quantity.'">';
+      echo '<button type="submit" id="up" name="submit1" value="up" style="border: none; background: none; padding: 0; margin: 0; display: inline; cursor: pointer;" onclick="btnup()">
+      <img style="margin-left:12px;width:12px" src="../images/qtyUp.png" alt="btnup">
+      </button>';
+
+      echo '<button type="submit" id="down" name="submit2" value="down" style="border: none; background: none; padding: 0; margin: 0; display: inline; cursor: pointer;" onclick="btndown()">
+      <img style="width:12px" src="../images/qtyDown.png" alt="btndown">
+      </button>';
+      echo ' </form>';
       echo '  </div>';
       echo '  <div class="col-sm"style="font-weight: bold;">';
       echo '    '.$total.'';
       echo '  </div>';
       echo '</div>';
       echo '  <hr>';
+      $div_count=$div_count+1;
     }
-
+    echo '</div>';
   ?>
 </div>
 
@@ -119,21 +130,54 @@ else{
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
-        function up(pid,size, quantity){
-            $.ajax({
-                        method: 'POST',
-                        url: 'cartUp.php',
-                        data: {
-                        PID:pid,
-                        SIZE: size,
-                        QTY: quantity
+        function btnup(){
+          $("form").submit(function(e){
+                e.preventDefault();
+                var formData= new FormData(this);
+                $.ajax({
+                    url:'cartUp.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,  // Don't process the data
+                    contentType: false,  // Don't set content type (browser will set it automatically)
+                    success: function(response){
+                        console.log(response);
+                        $("#table_div").html(response);
+
                     },
-                        success: function(response) {
-                        $('#qty').html(response);
-                        
-                }
+                    error: function (error) {
+                    console.error(error);
+                    }
+                    
+                });
+
+
             });
             }
+      function btndown(){
+        $("form").submit(function(e){
+                e.preventDefault();
+                var formData= new FormData(this);
+                $.ajax({
+                    url:'cartDown.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,  // Don't process the data
+                    contentType: false,  // Don't set content type (browser will set it automatically)
+                    success: function(response){
+                        console.log(response);
+                        $("#table_div").html(response);
+
+                    },
+                    error: function (error) {
+                    console.error(error);
+                    }
+                    
+                });
+
+
+            });
+      }
     </script>
 
 </body>
