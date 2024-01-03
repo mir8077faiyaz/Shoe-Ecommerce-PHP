@@ -5,14 +5,10 @@ require_once 'config.php';
 $pid=$_POST['pid'];
 $size=$_POST['size'];
 $quantity=$_POST['quantity'];
-$newqty=$quantity+1;
 
-//Updating
-$sql5= "UPDATE `order_item` SET `quantity`='$newqty' WHERE `pid`=$pid and `size`=$size";
+
+$sql5="DELETE FROM `order_item` WHERE `pid`=$pid and `size`=$size";
 $result5=mysqli_query($db_connection,$sql5);
-
-
-
 
 $gid=$_SESSION['login_id'];
 $sql= 'SELECT `id`, `name` FROM `users` WHERE `google_id`='.$gid.'';//extract id from users table gid for user account
@@ -102,4 +98,4 @@ $uid=$row['id'];//extract id and store in UID
   echo '  </div>';
   echo '<a href="order.php" class="btn-dark btn-lg mx-3">  Confirm order</a>';
 
-?>
+    ?>

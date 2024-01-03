@@ -9,6 +9,7 @@ $get_user = mysqli_query($db_connection, "SELECT * FROM `users` WHERE `google_id
 if(mysqli_num_rows($get_user) > 0){
     $user = mysqli_fetch_assoc($get_user);
 }
+
 else{
     header('Location: logout.php');
     exit;
@@ -56,6 +57,11 @@ else{
     <div class="col-sm"style="font-weight: bold;">
       Total Price
     </div>
+
+    
+    <div class="col-sm"style="font-weight: bold;">
+
+    </div>
     
   </div>
   <hr>
@@ -74,6 +80,7 @@ else{
     $result=mysqli_query($db_connection,$sql);
     $div_count=0;
     
+
     while($row=mysqli_fetch_assoc($result)){
       $img=$row['image'];
       $item=$row['name'];
@@ -82,6 +89,10 @@ else{
       $quantity=$row['quantity'];
       $total=$quantity*$price;
       $pid=$row['pid'];
+
+      $totalItem += $quantity;//line 111
+      $cartTotal += $total;// line 112
+
       echo '<div class="row ">';
       echo '  <div class="col-sm" style="font-weight: bold;">';
       echo '    <img class="img-fluid" src="../images/' . $img . '" alt="Image">';
@@ -108,15 +119,42 @@ else{
       echo '<button type="submit" id="down" name="submit2" value="down" style="border: none; background: none; padding: 0; margin: 0; display: inline; cursor: pointer;" onclick="btndown()">
       <img style="width:12px" src="../images/qtyDown.png" alt="btndown">
       </button>';
+
+     
       echo ' </form>';
+
+
       echo '  </div>';
       echo '  <div class="col-sm"style="font-weight: bold;">';
       echo '    '.$total.'';
       echo '  </div>';
+
+      echo ' <form onsubmit="return false" class="form-inline" style="margin-top:-80px">';
+      echo '<input type="hidden" name="pid" value="'.$pid.'">';
+      echo '<input type="hidden" name="size" value="'.$size.'">';
+      echo '<input type="hidden" name="quantity" value="'.$quantity.'">';
+
+      echo '  <div  class="col-sm" style="font-weight: bold;">';
+      echo '<button type="submit" value="delete" name="delete" onclick="btnDelete()"class="btn-danger btn-lg mx-3"> Delete </button>';
+
+      echo '  </div>';
+
+      echo ' </form>';
+
       echo '</div>';
       echo '  <hr>';
       $div_count=$div_count+1;
     }
+
+    echo '  <div class="col-sm" style="font-weight: bold;">';
+    echo ' <h5> Total Items:  '.$totalItem.'<h5>';
+    echo '  </div>';
+
+    echo '  <div class="col-sm" style="font-weight: bold;">';
+    echo '  <h5>Total Amount: $'.$cartTotal.'<h5>';
+    echo '  </div>';
+    echo '  <a href="order.php" class="btn-dark btn-lg mx-3"> Confirm order </a>';
+
     echo '</div>';
   ?>
 </div>
@@ -178,6 +216,32 @@ else{
 
             });
       }
+
+      function btnDelete(){
+        $("form").submit(function(e){
+                e.preventDefault();
+                var formData= new FormData(this);
+                $.ajax({
+                    url:'cartDelete.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,  // Don't process the data
+                    contentType: false,  // Don't set content type (browser will set it automatically)
+                    success: function(response){
+                        console.log(response);
+                        $("#table_div").html(response);
+
+                    },
+                    error: function (error) {
+                    console.error(error);
+                    }
+                    
+                });
+
+
+            });
+      }
+
     </script>
 
 </body>
