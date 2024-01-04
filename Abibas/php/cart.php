@@ -18,7 +18,7 @@ if (isset($_SESSION['login_id'])) {
     // Get the current local date and time
     $currentDate = date('Y-m-d'); // Format as 'Year-Month-Day'
 
-    $sql1='SELECT `oid`, `create_date`, `complete`, `uid` FROM `orders` WHERE `uid`='.$uid.'';
+    $sql1='SELECT `oid`, `create_date`, `complete`, `uid` FROM `orders` WHERE `uid`='.$uid.' AND `complete`=0';
     $result1=mysqli_query($db_connection,$sql1);
     $rownum= mysqli_num_rows($result1);
     if ($rownum == 0) {
@@ -64,7 +64,7 @@ if (isset($_SESSION['login_id'])) {
 
     }
     
-    $sql="SELECT SUM(quantity) FROM order_item WHERE uid='$uid'";
+    $sql="SELECT SUM(quantity) FROM order_item WHERE uid='$uid' AND `oid` IS NULL";
     $result=mysqli_query($db_connection,$sql);
     $row=mysqli_fetch_assoc($result); 
     $qty=$row['SUM(quantity)'];

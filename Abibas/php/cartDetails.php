@@ -76,7 +76,7 @@ else{
     $sql="SELECT order_item.*, product.name,product.price,product.image
     FROM order_item
     JOIN product ON order_item.pid = product.pid
-    WHERE `uid` ='$uid'";
+    WHERE `uid` ='$uid' AND `oid` IS NULL";
     $result=mysqli_query($db_connection,$sql);
     $div_count=0;
     

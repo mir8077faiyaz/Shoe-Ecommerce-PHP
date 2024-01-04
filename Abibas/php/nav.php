@@ -88,7 +88,7 @@ if(isset($_SESSION['login_id'])){
     
     $uid=$row['id'];//extract id and store in UID
 
-    $sql="SELECT SUM(quantity) FROM order_item WHERE uid='$uid'";
+    $sql="SELECT SUM(quantity) FROM order_item WHERE uid='$uid' AND `oid` IS NULL";
     $result=mysqli_query($db_connection,$sql);
     $row=mysqli_fetch_assoc($result); 
     $qty=$row['SUM(quantity)'];

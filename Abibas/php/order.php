@@ -25,28 +25,28 @@ $row=mysqli_fetch_assoc($result); //keep the results row by row in an array call
 $uid=$row['id'];//extract id and store in UID
 
 
-$sql="SELECT * FROM `orders` WHERE `complete`= 0 AND `uid`='.$uid.'";
+$sql="SELECT * FROM `orders` WHERE `complete`= 0 AND `uid`='$uid'";
 
 $result=mysqli_query($db_connection,$sql);//queries the db and checks if successful 
 $row=mysqli_fetch_assoc($result); //keep the results row by row in an array called $row
 $oid=$row['oid'];//extract id and store in OID
-echo gettype($result);
+// echo gettype($result);
 echo mysqli_num_rows($result);
-
+echo "here";
+echo $uid;
 echo $oid;
-
 $currentDate = date('Y-m-d'); // Format as 'Year-Month-Day'
 
 $sql="UPDATE `orders` SET `complete`=1,`create_date`='.$currentDate.' WHERE `uid`=$uid";
 $result=mysqli_query($db_connection,$sql);//queries the db and checks if successful 
-echo gettype($result);
+// echo gettype($result);
 //echo mysqli_num_rows($result);
 
 
-echo "here2";
+// echo "here2";
 $sql= "UPDATE `order_item` SET `oid`='$oid' WHERE `uid`=$uid AND `oid` IS NULL";
 $result=mysqli_query($db_connection,$sql);//queries the db and checks if successful 
 
-
+header('Location: home.php');
 ?>
 

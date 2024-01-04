@@ -13,7 +13,7 @@ $sql5= "UPDATE `order_item` SET `quantity`='$newqty' WHERE `pid`=$pid and `size`
 $result5=mysqli_query($db_connection,$sql5);
 }
 else{
-    $sql5="DELETE FROM `order_item` WHERE `pid`=$pid and `size`=$size";
+    $sql5="DELETE FROM `order_item` WHERE `pid`=$pid and `size`=$size AND `oid` IS NULL";
     $result5=mysqli_query($db_connection,$sql5);
 }
 
@@ -30,7 +30,7 @@ $uid=$row['id'];//extract id and store in UID
   $sql="SELECT order_item.*, product.name,product.price,product.image
   FROM order_item
   JOIN product ON order_item.pid = product.pid
-  WHERE `uid` ='$uid'";
+  WHERE `uid` ='$uid' AND `oid` IS NULL";
   $result=mysqli_query($db_connection,$sql);
   $div_count=0;
   
@@ -108,5 +108,11 @@ $uid=$row['id'];//extract id and store in UID
   echo '  <h5>Total Amount: $'.$cartTotal.'<h5>';
   echo '  </div>';
   echo '<a href="order.php" class="btn-dark btn-lg mx-3">  Confirm order</a>';
-
+  $sql="SELECT SUM(quantity) FROM order_item WHERE uid='$uid' AND `oid` IS NULL";
+  $result=mysqli_query($db_connection,$sql);
+  $row=mysqli_fetch_assoc($result); 
+  $qty=$row['SUM(quantity)'];
+  echo '<script>';
+  echo "$('#cart-qty').html('$qty')";
+  echo '</script>';
 ?>
